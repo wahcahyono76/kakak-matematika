@@ -78,15 +78,15 @@ http://localhost:3000
 ## 📸 Screenshot
 
 ### Tampilan Awal
-![Tampilan Awal](https://github.com/wahcahyono76/kakak-matematika/blob/main/public/screenshots/awal.jpg?raw=true)
+<img src="https://github.com/wahcahyono76/kakak-matematika/blob/main/public/screenshots/awal.jpg?raw=true" alt="Tampilan Awal" width="600">
 
 ### Percakapan dengan Kakak
-![Percakapan 1](https://github.com/wahcahyono76/kakak-matematika/blob/main/public/screenshots/percakapan1.jpg?raw=true)
+<img src="https://github.com/wahcahyono76/kakak-matematika/blob/main/public/screenshots/percakapan1.jpg?raw=true" alt="Percakapan 1" width="600">
 
-![Percakapan 2](https://github.com/wahcahyono76/kakak-matematika/blob/main/public/screenshots/percakapan2.jpg?raw=true)
+<img src="https://github.com/wahcahyono76/kakak-matematika/blob/main/public/screenshots/percakapan2.jpg?raw=true" alt="Percakapan 2" width="600">
 
 ### Memory Percakapan
-![Memory](https://github.com/wahcahyono76/kakak-matematika/blob/main/public/screenshots/memory.jpg?raw=true)
+<img src="https://github.com/wahcahyono76/kakak-matematika/blob/main/public/screenshots/memory.jpg?raw=true" alt="Memory" width="600">
 
 ---
 
