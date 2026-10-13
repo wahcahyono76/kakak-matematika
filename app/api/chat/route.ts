@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
     // Panggil Gemini dengan retry
     const interaction = await callGeminiWithRetry(() =>
       ai.interactions.create({
-        model: "gemini-2.5-flash", // ⬅️ model yang stabil
+        model: "gemini-3.6-flash", // ⬅️ model yang stabil
         input: message,
         system_instruction: SYSTEM_INSTRUCTION,
         ...(previousInteractionId && {
