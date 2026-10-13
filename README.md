@@ -1,20 +1,24 @@
 # 🧮 Kakak Matematika
 
-> Chatbot AI ramah anak untuk membantu siswa SD (usia 7–12 tahun) belajar matematika dengan cara yang menyenangkan.
+> Chatbot AI ramah anak untuk membantu siswa belajar matematika dengan cara yang menyenangkan — **menyesuaikan usia pengguna** (SD kelas 1-3, SD kelas 4-6, SMP, dan SMA).
+
+🔗 **Live Demo**: [https://kakak-matematika.vercel.app](https://kakak-matematika.vercel.app)
 
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38BDF8?logo=tailwind-css)
 ![Gemini](https://img.shields.io/badge/Gemini-3.8--flash-4285F4?logo=google)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript)
 
 ---
 
 ## 📖 Tentang Proyek
 
-**Kakak Matematika** adalah chatbot berbasis AI yang dirancang khusus untuk anak Sekolah Dasar (SD) berusia 7–12 tahun. Alih-alih memberikan jawaban langsung, "Kakak" membimbing anak berpikir melalui:
+**Kakak Matematika** adalah chatbot berbasis AI yang dirancang untuk membantu anak belajar matematika dengan pendekatan yang **ramah, sabar, dan menyesuaikan usia**. Alih-alih memberikan jawaban langsung, "Kakak" membimbing anak berpikir melalui:
 
 - 🎨 **Perumpamaan sehari-hari** — permen, pizza, uang jajan
 - 🧠 **Metode Socratic** — memancing dengan pertanyaan
 - 😊 **Bahasa santai & hangat** — seperti kakak sendiri
+- 👶 **Adaptif usia** — gaya bahasa otomatis menyesuaikan kelas pengguna
 - ✨ **Emoji** — bikin belajar tidak membosankan
 
 ---
@@ -22,10 +26,11 @@
 ## ✨ Fitur
 
 - 🎓 **Persona ramah anak** — "Kakak Matematika" dengan gaya bahasa santai
-- 💬 **Memory percakapan** — bot ingat nama & konteks sebelumnya
+- 👶 **Adaptif usia** — bot menyesuaikan gaya bahasa untuk SD kelas 1-3, SD kelas 4-6, SMP, dan SMA
+- 💬 **Memory percakapan** — bot ingat konteks percakapan sebelumnya
 - 🧩 **Bimbingan bertahap** — tidak langsung memberi jawaban
 - 🌈 **UI modern** — gradient lembut, rounded, nyaman dilihat anak
-- ⚡ **Streaming-ready** — arsitektur mendukung respons cepat
+- ⚡ **Responsif** — dibangun dengan Next.js App Router
 
 ---
 
@@ -33,7 +38,7 @@
 
 | Layer | Teknologi |
 |-------|-----------|
-| Framework | Next.js 16 (App Router + Turbopack) |
+| Framework | Next.js (App Router) |
 | Styling | Tailwind CSS 4 |
 | AI Model | Google Gemini (`gemini-3.8-flash`) |
 | SDK | `@google/genai` |
@@ -78,28 +83,31 @@ http://localhost:3000
 ## 📸 Screenshot
 
 ### Tampilan Awal
-<img src="https://github.com/wahcahyono76/kakak-matematika/blob/main/public/screenshots/awal.jpg?raw=true" alt="Tampilan Awal" width="600">
+![Tampilan Awal](public/screenshots/awal.jpg)
 
 ### Percakapan dengan Kakak
-<img src="https://github.com/wahcahyono76/kakak-matematika/blob/main/public/screenshots/percakapan1.jpg?raw=true" alt="Percakapan 1" width="600">
+![Percakapan 1](public/screenshots/percakapan1.jpg)
 
-<img src="https://github.com/wahcahyono76/kakak-matematika/blob/main/public/screenshots/percakapan2.jpg?raw=true" alt="Percakapan 2" width="600">
+![Percakapan 2](public/screenshots/percakapan2.jpg)
 
 ### Memory Percakapan
-<img src="https://github.com/wahcahyono76/kakak-matematika/blob/main/public/screenshots/memory.jpg?raw=true" alt="Memory" width="600">
+![Memory](public/screenshots/memory.jpg)
 
 ---
 
-Chatbot ini menggunakan fitur **server-side state** dari Gemini Interactions API:
+## 🧠 Cara Kerja Memory Percakapan
 
-1. Setiap permintaan ke `/api/chat` mengembalikan `interactionId`
-2. Frontend menyimpan `interactionId` di state
-3. Permintaan berikutnya menyertakan `previousInteractionId`
-4. Gemini otomatis melanjutkan konteks percakapan
+Chatbot ini menggunakan **client-side history** untuk menjaga konteks percakapan:
+
+1. Setiap pesan user & balasan bot disimpan di state `messages` (`app/page.tsx`)
+2. Saat user mengirim pesan baru, **seluruh riwayat** dikirim ke backend
+3. Backend menyusun array `contents` dari riwayat + pesan baru, lalu mengirimnya ke Gemini API
+4. Gemini memahami konteks dari array tersebut dan membalas sesuai topik sebelumnya
 
 Implementasi ada di:
-- `src/app/api/chat/route.ts` — backend
-- `src/app/page.tsx` — frontend (state management)
+- `app/api/chat/route.ts` — backend (menyusun `contents`)
+- `app/page.tsx` — frontend (state management)
+- `lib/systemInstruction.ts` — prompt persona & aturan adaptif usia
 
 ---
 
@@ -108,19 +116,19 @@ Implementasi ada di:
 ```
 kakak-matematika/
 ├── app/
-│   │   ├── api/chat/route.ts       # Endpoint API Gemini
-│   │   ├── layout.tsx              # Layout global
-│   │   ├── page.tsx                # Halaman utama chat
-│   │   └── globals.css             # Style global
-│   ├── components/
-│   │   ├── ChatHeader.tsx          # Header gradient
-│   │   ├── ChatBubble.tsx          # Bubble pesan
-│   │   └── ChatInput.tsx           # Input & tombol kirim
-│   └── lib/
-│       └── systemInstruction.ts    # Prompt persona "Kakak"
+│   ├── api/chat/route.ts       # Endpoint API Gemini
+│   ├── layout.tsx              # Layout global
+│   ├── page.tsx                # Halaman utama chat
+│   └── globals.css             # Style global
+├── components/
+│   ├── ChatHeader.tsx          # Header gradient
+│   ├── ChatBubble.tsx          # Bubble pesan
+│   └── ChatInput.tsx           # Input & tombol kirim
+├── lib/
+│   └── systemInstruction.ts    # Prompt persona & adaptif usia
 ├── public/
-│   └── screenshots/                # Screenshot untuk README
-├── .env.local                      # API key (TIDAK di-commit)
+│   └── screenshots/            # Screenshot untuk README
+├── .env.local                  # API key (TIDAK di-commit)
 └── README.md
 ```
 
@@ -128,13 +136,25 @@ kakak-matematika/
 
 ## 🎯 Contoh Percakapan
 
+### Contoh 1 — Anak SD kelas 1-3
 **User:** `3 + 5 berapa?`
 
 **Kakak Matematika:**
 > Halo! Pertanyaan yang bagus banget! ✨
 > Coba bayangkan kamu punya 3 permen rasa stroberi 🍓. Terus, Kakak kasih lagi 5 permen rasa jeruk 🍊.
-> Nah, sekarang coba kita hitung bareng-bareng pakai jari ya! Mulai dari angka 3, lalu maju 5 jari ke depan: 4... 5... 6... 7...
-> Hayo, jari yang kelima angkanya berapa? Coba tebak berapa total semua permenmu sekarang! 🤔🍓
+> Nah, sekarang coba kita hitung bareng-bareng pakai jari ya! Mulai dari angka 3, lalu maju 5 jari ke depan: 4... 5... 6... 7... 8!
+> Hayo, jari yang kelima angkanya berapa? 🤔🍓
+
+### Contoh 2 — Anak SMP
+**User:** `Aku kelas 8. Bagaimana cara menyelesaikan 2x + 3 = 11?`
+
+**Kakak Matematika:**
+> Oke, kita selesaikan langkah demi langkah ya.
+> Pertama, kita ingin "x" sendirian di satu sisi. Kurangi kedua sisi dengan 3:
+> 2x + 3 - 3 = 11 - 3 → 2x = 8
+> Lalu bagi kedua sisi dengan 2:
+> 2x / 2 = 8 / 2 → x = 4
+> Coba kamu cek: kalau x = 4, apakah 2(4) + 3 = 11? 😊
 
 ---
 

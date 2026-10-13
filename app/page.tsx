@@ -10,10 +10,13 @@ type Message = {
   content: string;
 };
 
+const SAPAAN_AWAL = "Hai! 👋 Aku Kakak Matematika. Sebelum kita mulai, kamu kelas berapa? Biar Kakak bisa jelaskan dengan cara yang pas buat kamu 😊";
+
 export default function Home() {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([
+    { role: "assistant", content: SAPAAN_AWAL }  // ← Pesan pembuka otomatis
+  ]);
   const [isLoading, setIsLoading] = useState(false);
-  const [interactionId, setInteractionId] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -34,16 +37,11 @@ export default function Home() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message: text,
-          previousInteractionId: interactionId,
+          history: messages,
         }),
       });
 
       const data = await res.json();
-
-      if (data.interactionId) {
-        setInteractionId(data.interactionId);
-      }
-
       setMessages((prev) => [
         ...prev,
         { role: "assistant", content: data.reply || data.error },
@@ -67,13 +65,6 @@ export default function Home() {
           ref={scrollRef}
           className="h-[500px] overflow-y-auto p-4 space-y-4"
         >
-          {messages.length === 0 && (
-            <div className="text-center text-gray-400 mt-20">
-              <p className="text-4xl mb-4">👋</p>
-              <p>Hai! Aku siap bantu kamu belajar matematika~</p>
-            </div>
-          )}
-
           {messages.map((msg, idx) => (
             <ChatBubble key={idx} role={msg.role} content={msg.content} />
           ))}
