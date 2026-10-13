@@ -78,13 +78,15 @@ http://localhost:3000
 ## 📸 Screenshot
 
 ### Tampilan Awal
-![Tampilan Awal](public/screenshots/Tampilan Awal.jpg)
+![Tampilan Awal](public/screenshots/awal.jpg)
 
 ### Percakapan dengan Kakak
-![Percakapan](public/screenshots/Percakapan.jpg)
+![Percakapan](public/screenshots/percakapan1.jpg)
+
+![Percakapan 2](public/screenshots/percakapan2.jpg)
 
 ### Memory Percakapan
-![Memory](public/screenshots/Memory.jpg)
+![Memory](public/screenshots/memory.jpg)
 
 ---
 
