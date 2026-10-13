@@ -78,19 +78,17 @@ http://localhost:3000
 ## 📸 Screenshot
 
 ### Tampilan Awal
-![Tampilan Awal](public/screenshots/awal.jpg)
+![Tampilan Awal](https://github.com/wahcahyono76/kakak-matematika/blob/main/public/screenshots/awal.jpg?raw=true)
 
 ### Percakapan dengan Kakak
-![Percakapan](public/screenshots/percakapan1.jpg)
+![Percakapan 1](https://github.com/wahcahyono76/kakak-matematika/blob/main/public/screenshots/percakapan1.jpg?raw=true)
 
-![Percakapan 2](public/screenshots/percakapan2.jpg)
+![Percakapan 2](https://github.com/wahcahyono76/kakak-matematika/blob/main/public/screenshots/percakapan2.jpg?raw=true)
 
 ### Memory Percakapan
-![Memory](public/screenshots/memory.jpg)
+![Memory](https://github.com/wahcahyono76/kakak-matematika/blob/main/public/screenshots/memory.jpg?raw=true)
 
 ---
-
-## 🧠 Cara Kerja Memory
 
 Chatbot ini menggunakan fitur **server-side state** dari Gemini Interactions API:
 
